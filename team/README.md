@@ -1,7 +1,10 @@
 # 说明
 [架构说明](https://github.com/Software-Eng-THU-2015/LanxiangElectrician/blob/master/team/framework.md)
+
 [数据库说明](https://github.com/Software-Eng-THU-2015/LanxiangElectrician/blob/master/team/database.md)
+
 [会议纪要](https://github.com/Software-Eng-THU-2015/LanxiangElectrician/blob/master/team/meetings.md)
+
 [微信api参考](https://github.com/Software-Eng-THU-2015/LanxiangElectrician/blob/master/team/wechat_api.md)
 
 -----

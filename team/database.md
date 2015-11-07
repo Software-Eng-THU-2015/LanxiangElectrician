@@ -1,52 +1,53 @@
-数据库字典
+数据库字典: thuactivities
 -----
 斜体为*索引*
 
 加粗为**主键**
+已添加外键，尚未添加索引
+
+# schedule
+* ***id***
+* user_id: foreign key
+* activity_id: foreign key
+* seat_id: foreign key
+* ticket: QR code
+* presence: whether present in the activity
 
 
-# Table_Schedule
-* ***Schedule_ID***
-* User_ID
-* Activity_ID
-* Schedule_Seat_ID
-* Schedule_Ticket
-* Schedule_Presence
+# user
+* ***id***
+* name
+* gender
+* telephone
+* wechat_id
+* verified: whether verified by administrator
+* priority
 
 
-# Table_User
-* ***User_ID***
-* User_Name
-* User_Gender
-* User_Telephone
-* User_Approval
-* User_Priority
+# activity
+* ***id***
+* title
+* time
+* description
+* number_of_tickets
+* tickets_sold: number of tickets sold
+* classroom_id: foreign key
 
 
-# Table_Activity
-* ***Activity_ID***
-* Activity_Title
-* Activity_Time
-* Activity_Guest
-* Activity_Description
-* Activity_Ticket_Start
-* Activity_Ticket_End
-* Classroom_ID
+# activity_preference
+not constructed yet
+* ***user_id***
+* ***activity_id***
+* prefer_time
 
 
-# Table_Activity_Like
-* ***User_ID***
-* ***Activity_ID***
-* Like_Time
+# classroom
+* ***id***
+* name
 
 
-# Table_Classroom_
-* ***Classroom_ID***
-* Classroom_Name
-
-
-# Table_Seat
-* ***Seat ID***
-* *Classroom_ID*
-* Seat_Name
+# seat
+* ***id***
+* classroom_id: foreign_key
+* name
 

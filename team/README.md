@@ -6,6 +6,7 @@
 [会议纪要](https://github.com/Software-Eng-THU-2015/LanxiangElectrician/blob/master/team/meetings.md)
 
 [微信api参考](https://github.com/Software-Eng-THU-2015/LanxiangElectrician/blob/master/team/wechat_api.md)
+=======
 
 -----
 # 微信抢票应用

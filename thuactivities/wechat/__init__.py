@@ -5,7 +5,4 @@ Ref.: https://github.com/doraemonext/wechat-python-sdk/blob/master/wechat_sdk/__
 
 __all__ = ['WechatBasic']
 
-try:
-    from wechat.basic import WechatBasic
-except ImportError:
-    pass
+from wechat.basic import WechatBasic

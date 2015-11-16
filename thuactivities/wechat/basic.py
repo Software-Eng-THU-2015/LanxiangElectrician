@@ -9,7 +9,10 @@ import hashlib
 # import cgi
 # from StringIO import StringIO
 
+from .messages import MESSAGE_TYPES, UnknownMessage
 from .exceptions import ParseError, NeedParseError, NeedParamError, OfficialAPIError
+from .reply import TextReply
+from .lib import XMLStore
 
 class WechatBasic(object):
     """
@@ -29,7 +32,7 @@ class WechatBasic(object):
         self.__appsecret = appsecret
         self.__access_token = access_token
         self.__access_token_expires_at = access_token_expires_at
-        self.__is_parse = False
+        self.__is_parsed = False
         self.__message = None
 
     def check_signature(self, signature, timestamp, nonce):
@@ -51,6 +54,59 @@ class WechatBasic(object):
         else:
             return False
 
+    def parse_data(self, data):
+        """
+        解析微信服务器发送过来的数据并保存类中
+        @param data: HTTP Request 的 Body 数据
+        @raises ParseError: 解析微信服务器数据错误, 数据不合法
+        """
+        result = {}
+        if type(data) == bytes:
+            data = data.decode('utf-8')
+        elif type(data) == str:
+            pass
+        else:
+            raise ParseError('Type of data is not utf-8/unicode.')
+
+        try:
+            xml = XMLStore(xmlstring=data)
+        except Exception:
+            raise ParseError('XML ParseError.')
+
+        result = xml.xml2dict
+        result['raw'] = data
+        result['type'] = result.pop('MsgType').lower()
+        message_type = MESSAGE_TYPES.get(result['type'], UnknownMessage)
+        self.__message = message_type(result)
+        self.__is_parsed = True
+
+    @property
+    def message(self):
+        return self.get_message()
+
+    def get_message(self):
+        self._check_parse()
+        return self.__message
+        
+    def response_text(self, content, escape=False):
+        """
+        将文字信息 content 组装为符合微信服务器要求的响应数据
+        @param content: 回复文字
+        @param escape: 是否转义该文本内容 (默认不转义)
+        @return: 符合微信服务器要求的 XML 响应数据
+        """
+        self._check_parse()
+        #content = self._transcoding(content)
+        #if escape:
+        #    content = cgi.escape(content)
+        return TextReply(message=self.__message, content=content).render()
+
+    def _check_parse(self):
+        """
+        检查是否成功解析微信服务器传来的数据
+        """
+        if not self.__is_parsed:
+            raise NeedParseError
 
     def _check_token(self):
         """

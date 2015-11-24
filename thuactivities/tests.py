@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Tests for tornado server.
+Tests for local server.
 Author: Norrix
 2015-11-07
 """
